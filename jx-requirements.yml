@@ -1,22 +1,62 @@
 autoUpdate:
   enabled: false
   schedule: ""
+bootConfigURL: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  environmentGitPublic: true
-  project: ""
   azure: {}
+  clusterName: pr-36-1-boot-gke
+  environmentGitOwner: cb-kubecd
+  environmentGitPublic: true
+  gitKind: github
+  gitName: github
+  gitPublic: true
+  gitServer: https://github.com
+  namespace: jx
+  project: jenkins-x-bdd3
   provider: gke
-  zone: ""
-gitops: true
+  registry: gcr.io
+  zone: europe-west1-c
 environments:
-- key: dev
-- key: staging
-- key: production
+- ingress:
+    domain: 104.155.64.120.nip.io
+    externalDNS: false
+    namespaceSubDomain: -jx.
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: dev
+- gitKind: github
+  gitServer: https://github.com
+  ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+  owner: cb-kubecd
+  repository: environment-pr-36-1-boot-gke-staging
+- gitKind: github
+  gitServer: https://github.com
+  ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+  owner: cb-kubecd
+  repository: environment-pr-36-1-boot-gke-production
+gitops: true
 ingress:
-  domain: ""
+  domain: 104.155.64.120.nip.io
   externalDNS: false
+  namespaceSubDomain: -jx.
   tls:
     email: ""
     enabled: false
@@ -24,6 +64,9 @@ ingress:
 kaniko: true
 secretStorage: vault
 storage:
+  backup:
+    enabled: false
+    url: ""
   logs:
     enabled: true
     url: ""
@@ -33,7 +76,10 @@ storage:
   repository:
     enabled: true
     url: ""
+vault:
+  disableURLDiscovery: true
+velero: {}
 versionStream:
-  ref: b335faf15fddb5863a7b5360b03f48b72fe69340 
+  ref: 62e17fe1f6c9deb955bf80d2bb26ff3d31e2fb9c
   url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
 webhook: prow
